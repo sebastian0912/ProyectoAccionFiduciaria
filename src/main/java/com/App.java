@@ -21,7 +21,7 @@ public class App extends Application {
     public void start( Stage stage) throws IOException {
         scene = new Scene(loadFXML("layout"), 640, 480);
         stage.setScene(scene);
-        
+        stage.setTitle("ACCIÓN FIDUCIARIA 1");
         stage.getIcons().add(new Image("src/main/resources/com/assets/228-2282843_iconos-png-icono-alternativas-png-transparent-png.png"));
         
         
