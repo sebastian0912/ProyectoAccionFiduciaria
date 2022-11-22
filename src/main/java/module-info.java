@@ -5,5 +5,6 @@ module com {
 
     opens com to javafx.fxml;
     exports com;
+    exports com.Model;
 }
 
