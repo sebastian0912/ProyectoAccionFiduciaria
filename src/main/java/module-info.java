@@ -1,5 +1,5 @@
 module com {
-    //requires transitive javafx.graphics;
+    requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 

@@ -14,29 +14,35 @@
       <children>
         <Label alignment="CENTER" layoutX="4.0" layoutY="98.0" prefHeight="27.0" prefWidth="633.0" style="&#10;" text="  Procesamiento de Archivos de movimientos de Diario" textAlignment="CENTER" wrapText="false">
           <font>
-            <Font size="18.0" />
+            <Font name="Britannic Bold" size="18.0" />
           </font>
         </Label>
             <Label layoutX="61.0" layoutY="143.0" prefHeight="20.0" prefWidth="158.0" text="1.  Cargue el documento">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Times New Roman" size="14.0" />
                </font></Label>
-            <Button fx:id="cargar" layoutX="294.0" layoutY="141.0" mnemonicParsing="false" onAction="#cargarArchivo" text="Cargar" />
+            <Button fx:id="cargar" layoutX="294.0" layoutY="142.0" mnemonicParsing="false" onAction="#cargarArchivo" text="Cargar">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Button>
             <Label layoutX="79.0" layoutY="177.0" text="Numero de datos cargados:">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Times New Roman" size="14.0" />
                </font></Label>
-            <Label fx:id="contador" layoutX="259.0" layoutY="177.0" text="0">
+            <Label fx:id="contador" layoutX="255.0" layoutY="179.0" text="0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Times New Roman" size="14.0" />
                </font></Label>
-            <Label fx:id="proceso" layoutX="397.0" layoutY="145.0" onDragDetected="#estadoProceso" />
-            <ImageView fitHeight="54.0" fitWidth="121.0" layoutX="29.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+            <Label fx:id="proceso" layoutX="397.0" layoutY="148.0">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font></Label>
+            <ImageView fitHeight="55.0" fitWidth="143.0" layoutX="29.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/LogoAcccionFiduciaria.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="52.0" fitWidth="121.0" layoutX="476.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="89.0" fitWidth="194.0" layoutX="397.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/LocoBaker.jpg" />
                </image>

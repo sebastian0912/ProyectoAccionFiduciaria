@@ -8,11 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 
@@ -20,7 +21,7 @@ public class layoutController {
 
     FileChooser fileChooser = new FileChooser();
     ArrayList<Datos> datos = new ArrayList<Datos>();
-    
+    Datos dato = new Datos();
 
     @FXML
     private Button cargar;
@@ -34,24 +35,20 @@ public class layoutController {
     @FXML
     void cargarArchivo(ActionEvent event) throws FileNotFoundException {
         // Escoger el archivo, cargarlo y mostrar su nombre en la consola
-        // System.out.println(fileChooser.showOpenDialog(cargar.getScene().getWindow()).getName());
         String path = fileChooser.showOpenDialog(cargar.getScene().getWindow()).getAbsolutePath();
-
-        
-        mostrarDatos(path);
-
+        String pathWithNameArchive;
+        //quitar el nombre del archivo
+        pathWithNameArchive = path.substring(0, path.lastIndexOf("\\"));       
+        //Guarda los datos en un ArrayList
+        SaveData(path);
+        proceso.setText("Archivo Cargado");
+        SeparateByQuater(datos, pathWithNameArchive);
     }
 
-
-    @FXML
-    void estadoProceso(MouseEvent event) {
-
-    }
-
-    public void mostrarDatos(String path) {
+    public void SaveData(String path) {        
         // LEER ARCHIVO DE TEXTO y imprimir su contenido en la consola
         File archivo = new File(path);
-        int cont = 0;
+        double cont = 0;      
         // separar por tabulaciones y comas y almacenar en el arraylist datos
         try {
             FileReader fr = new FileReader(archivo);
@@ -88,24 +85,78 @@ public class layoutController {
                     , datosLinea[23]
                     , datosLinea[24]
                     , datosLinea[25]
-                    ));                    
-                       
-                   // break;
-                }
-                cont++;
-                //System.out.println(cont);
+                    )); 
+                }                
+                cont++;  
                 contador.setText(String.valueOf(cont));
-            }      
-            
-            
-            // Imprimir el ultimo objeto del arraylist
-            System.out.println(datos.get(datos.size()-1).getCuenta_11());
+            }   
             br.close();
             fr.close();
         } catch (Exception e) {
             System.out.println("Error al leer el archivo");
         }
 
+    }
+
+    public void SeparateByQuater( ArrayList<Datos> listaDeDatos, String path){
+        ArrayList<ArrayList<Datos>> datos = new ArrayList<ArrayList<Datos>>();
+        ArrayList<Datos> datos1 = new ArrayList<Datos>();
+        ArrayList<Datos> datos2 = new ArrayList<Datos>();
+        ArrayList<Datos> datos3 = new ArrayList<Datos>();
+        ArrayList<Datos> datos4 = new ArrayList<Datos>();
+        for (Datos dat: listaDeDatos){
+            if (QuaterIndicator(dat.getFecha()) == 1){
+                datos1.add(dat);
+            }
+            else if (QuaterIndicator(dat.getFecha()) == 2){
+                datos2.add(dat);
+            }
+            else if (QuaterIndicator(dat.getFecha()) == 3){
+                datos3.add(dat);
+            }
+            else if (QuaterIndicator(dat.getFecha()) == 4){
+                datos4.add(dat);
+            }            
+        }
+        datos.add(datos1);
+        datos.add(datos2);
+        datos.add(datos3);
+        datos.add(datos4);
+
+        GenerateFilesByQuarters(datos, path);
+    }
+
+    public void GenerateFilesByQuarters(ArrayList<ArrayList<Datos>> datos, String path){
+        // Generar 4 archivos de texto con los datos de cada trimestre
+        for (int i = 0; i < datos.size(); i++) {
+            try {
+                FileWriter fw = new FileWriter(path + "/Trimestre" + (i+1) + ".txt", true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                for (int j = 0; j < datos.get(i).size(); j++) {
+                    bw.write(datos.get(i).get(j).getFecha() + "\t");
+                    bw.newLine();  
+                }
+                fw.close();
+            } catch (Exception e) {
+                System.out.println("Error al escribir el archivo");
+            }
+        }
+    }    
+
+    public int QuaterIndicator(String fecha){
+        int quater = 0;
+        String[] fechaSeparada = fecha.split("/");
+        int mes = Integer.parseInt(fechaSeparada[1]);
+        if (mes >= 1 && mes <= 3){
+            quater = 1;
+        }else if (mes >= 4 && mes <= 6){
+            quater = 2;
+        }else if (mes >= 7 && mes <= 9){
+            quater = 3;
+        }else if (mes >= 10 && mes <= 12){
+            quater = 4;
+        }
+        return quater;
     }
 
 }
